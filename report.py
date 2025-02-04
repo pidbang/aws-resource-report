@@ -45,6 +45,7 @@ def main():
             f"-id:arn:aws:memorydb:{region}:{account_id}:parametergroup/default.*",
             f"-id:arn:aws:memorydb:{region}:{account_id}:user/default",
             f"-id:arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard",
+            f"-id:arn:aws:ses:{region}:{account_id}:configuration-set/my-first-configuration-set",
         ]
         resource_page_iterator = search_paginator.paginate(
             QueryString=" ".join(query_items),
