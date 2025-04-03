@@ -34,6 +34,7 @@ def main():
             "-resourcetype:resource-explorer-2:index",
             f"-id:arn:aws:athena:{region}:{account_id}:datacatalog/AwsDataCatalog",
             f"-id:arn:aws:athena:{region}:{account_id}:workgroup/primary",
+            f"-id:arn:aws:cloudtrail:{region}:{account_id}:channel/aws-service-channel/resource-explorer-2/*",
             f"-id:arn:aws:ecs:{region}:{account_id}:capacity-provider/FARGATE",
             f"-id:arn:aws:ecs:{region}:{account_id}:capacity-provider/FARGATE_SPOT",
             f"-id:arn:aws:elasticache:{region}:{account_id}:parametergroup:default.*",
