@@ -3,12 +3,17 @@ import json
 from botocore.paginate import PageIterator
 
 
+DEBUG_BOTO=False
+
+
 def main():
     print("loading data...")
     pagination_config = {
         'MaxItems': 1000,
         'PageSize': 10,
     }
+    if DEBUG_BOTO:
+        boto3.set_stream_logger('')
     iam_client = boto3.client('iam')
     client = boto3.client('sts')
     response = client.get_caller_identity()
@@ -45,7 +50,6 @@ def main():
             f"-id:arn:aws:memorydb:{region}:{account_id}:acl/open-access",
             f"-id:arn:aws:memorydb:{region}:{account_id}:parametergroup/default.*",
             f"-id:arn:aws:memorydb:{region}:{account_id}:user/default",
-            f"-id:arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard",
             f"-id:arn:aws:ses:{region}:{account_id}:configuration-set/my-first-configuration-set",
         ]
         resource_page_iterator = search_paginator.paginate(
@@ -74,6 +78,8 @@ def main():
                     )
                     if is_tagged(role_tags_page_iterator):
                         continue
+                if is_filtered(region, account_id, resource):
+                    continue
                 print(json.dumps(resource, indent="  ", default=str))
     print("done")
 
@@ -84,6 +90,12 @@ def is_tagged(tags_page_iterator: PageIterator) -> bool:
             if tag['Key'] == "resource_group":
                 return True
     return False
+
+
+def is_filtered(region: str, account_id: str, resource: dict) -> bool:
+    arn = resource['Arn']
+    return arn.startswith(f"arn:aws:apprunner:{region}:{account_id}:autoscalingconfiguration/DefaultConfiguration") \
+        or arn == f"arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard"
 
 
 if __name__ == "__main__":

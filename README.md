@@ -25,3 +25,9 @@ The following policy must be in place to run this report:
     ]
 }
 ```
+
+## Limitations
+
+> The QueryString parameter has a maximum length of 1280 characters.
+
+To work around this limitations, selected resources are filtered in code.
