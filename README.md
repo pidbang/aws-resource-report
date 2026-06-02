@@ -1,4 +1,6 @@
-# Check AWS resources that are not tagged with a `resource_group` tag
+# Resource reports
+
+## Check AWS resources that are not tagged with a `resource_group` tag
 
 This report checks all available regions. It filters out some resources, that seem to be created in each region by default.
 
@@ -26,8 +28,10 @@ The following policy must be in place to run this report:
 }
 ```
 
-## Limitations
+### Limitations
 
 > The QueryString parameter has a maximum length of 1280 characters.
 
 To work around this limitations, selected resources are filtered in code.
+
+## Check AWS resources are all described and grouped

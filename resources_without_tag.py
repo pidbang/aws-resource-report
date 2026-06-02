@@ -95,7 +95,8 @@ def is_tagged(tags_page_iterator: PageIterator) -> bool:
 def is_filtered(region: str, account_id: str, resource: dict) -> bool:
     arn = resource['Arn']
     return arn.startswith(f"arn:aws:apprunner:{region}:{account_id}:autoscalingconfiguration/DefaultConfiguration") \
-        or arn == f"arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard"
+        or arn == f"arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard" \
+        or arn == f"arn:aws:xray:{region}:{account_id}:sampling-rule/Default"
 
 
 if __name__ == "__main__":
