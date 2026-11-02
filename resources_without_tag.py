@@ -43,7 +43,7 @@ def main():
             f"-id:arn:aws:ecs:{region}:{account_id}:capacity-provider/FARGATE",
             f"-id:arn:aws:ecs:{region}:{account_id}:capacity-provider/FARGATE_SPOT",
             f"-id:arn:aws:elasticache:{region}:{account_id}:parametergroup:default.*",
-            f"-id:arn:aws:elasticache:{region}:{account_id}:user:default",
+            f"-id:arn:aws:elasticache:{region}:{account_id}:user:default*",
             f"-id:arn:aws:events:{region}:{account_id}:event-bus/default",
             f"-id:arn:aws:iam::{account_id}:mfa/root-account-mfa-device",
             f"-id:arn:aws:iam::{account_id}:role/aws-service-role/*",
@@ -96,7 +96,8 @@ def is_filtered(region: str, account_id: str, resource: dict) -> bool:
     arn = resource['Arn']
     return arn.startswith(f"arn:aws:apprunner:{region}:{account_id}:autoscalingconfiguration/DefaultConfiguration") \
         or arn == f"arn:aws:s3:{region}:{account_id}:storage-lens/default-account-dashboard" \
-        or arn == f"arn:aws:xray:{region}:{account_id}:sampling-rule/Default"
+        or arn == f"arn:aws:xray:{region}:{account_id}:sampling-rule/Default" \
+        or arn == f"arn:aws:xray:{region}:{account_id}:group/Default"
 
 
 if __name__ == "__main__":
